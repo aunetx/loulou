@@ -55,4 +55,4 @@ def runTrain(params, architecture, file='trained.npy'):
     file = '../trains/' + file
     trX, trY, teX, teY = mnist.load_data()
     weights = [np.random.randn(*w) * 0.1 for w in architecture]
-    return train(weights, trX, trY, teX, teY, 'trained.npy', epochs, batch, learning_rate)
+    return train(weights, trX, trY, teX, teY, file, epochs, batch, learning_rate)
