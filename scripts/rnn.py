@@ -1,17 +1,15 @@
 import numpy as np
 import mnist as mnist
 
+# Fordward propagation
 def feed_forward(X, weights):
     a = [X]
     for w in weights:
-        a.append(np.maximum(a[-1].dot(w),0)) # Calculer l'avancée
-        # np.maximum(val, 0) -> relu
-        # a[-1].dot(w) -> valeur * poids
-        # a.append -> rajouter la valeur à la fin du tableau
+        a.append(np.maximum(a[-1].dot(w),0))
     return a
 
 def grads(X, Y, weights, square):
-    grads = np.empty_like(weights) # grads représente la matrice de correction des poids
+    grads = np.empty_like(weights) # |grads| : weights corrections matrix
     a = feed_forward(X, weights) # on nourrit le réseau et on stocke les valeurs des neurones dans 'a'
     if square:
         delta = a[-1]*a[-1] - Y*Y # on met l'erreur au carré
