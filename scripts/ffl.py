@@ -1,5 +1,6 @@
 import numpy as np
 import json
+import os
 
 def feed_forward(X, weights):
     a = [X]
@@ -27,6 +28,9 @@ def train(weights, trX, trY, teX, teY, filename=False, epochs=30, batch=20, lear
         prediction = np.argmax(feed_forward(teX, weights)[-1], axis=1)
         print(i+1, np.mean(prediction == np.argmax(teY, axis=1)))
     if filename:
+        path = os.path.dirname(__file__)
+        filename = os.path.join(path, filename)
+        print(filename)
         save(weights, filename)
 
 def save(weights, filename):
