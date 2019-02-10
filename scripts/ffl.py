@@ -19,19 +19,22 @@ def grads(X, Y, weights):
     return grads / len(X)
 
 def train(weights, trX, trY, teX, teY, filename, epochs, batch, learning_rate):
+    accuracy = {}
     prediction = np.argmax(feed_forward(teX, weights)[-1], axis=1)
-    print(0, np.mean(prediction == np.argmax(teY, axis=1)))
+    accuracy[0] = np.mean(prediction == np.argmax(teY, axis=1))
+    print(0, accuracy[0])
     for i in range(epochs):
         for j in range(0, len(trX), batch):
             X, Y = trX[j:j+batch], trY[j:j+batch]
             weights -= learning_rate * grads(X, Y, weights)
         prediction = np.argmax(feed_forward(teX, weights)[-1], axis=1)
-        print(i+1, np.mean(prediction == np.argmax(teY, axis=1)))
+        accuracy[i+1] = np.mean(prediction == np.argmax(teY, axis=1))
+        print(i+1, accuracy[i+1])
     if filename:
         path = os.path.dirname(__file__)
         filename = os.path.join(path, filename)
-        print(filename)
         save(weights, filename)
+    return accuracy
 
 def save(weights, filename):
     np.save(filename,weights)
@@ -42,3 +45,13 @@ def convertJson(pred):
     out['hot_prediction'] = list(pred)
     out['prediction'] = int(np.argmax(pred))
     return json.dumps(out)
+
+def runTrain(params, architecture, file='trained.npy'):
+    params = json.loads(params)
+    epochs = params['epochs']
+    batch = params['batch']
+    learning_rate = params['learning_rate']
+    file = '../trains/' + file
+    trX, trY, teX, teY = mnist.load_data()
+    weights = [np.random.randn(*w) * 0.1 for w in architecture]
+    return train(weights, trX, trY, teX, teY, 'trained.npy', epochs, batch, learning_rate)
