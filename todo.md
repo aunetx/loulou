@@ -1,8 +1,4 @@
 ## To-do
 
-- Update code to use with that implementation
-- Separate files onto :
-  - Functions file : scripts/ffl.py
-  - Training script : scripts/train.py
-  - Predicting script : scripts/run.py
-  - Global caller : loulou.py
+- Simplify utilisation of training - `train.js`
+- Adding automatisation for running - `run.js`
