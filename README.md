@@ -17,7 +17,7 @@ pip install matplotlib #(optional)
 To install Loulou, just do :
 ```
 git clone https://github.com/aunetx/loulou
-cd loulou/scripts
+cd loulou/
 ```
 
 ### Utilisation :
