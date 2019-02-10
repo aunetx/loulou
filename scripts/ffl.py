@@ -1,4 +1,5 @@
 import numpy as np
+import json
 
 def feed_forward(X, weights):
     a = [X]

@@ -2,7 +2,6 @@ import numpy as np
 from ffl import *
 import sys
 import matplotlib.image as image
-import json
 
 #   Handling errors for bad arguments
 try:
