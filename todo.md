@@ -1,3 +1,3 @@
 ## To-do
 
-- Updating code to use with that implementation
+- Update code to use with that implementation
