@@ -1,6 +1,7 @@
 import numpy as np
 import json
 import os
+import mnist
 
 def feed_forward(X, weights):
     a = [X]

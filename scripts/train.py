@@ -1,4 +1,3 @@
-import mnist
 from ffl import *
 import json
 
