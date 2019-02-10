@@ -1,5 +1,5 @@
 import numpy as np
-from rnn import *
+from ffl import *
 import sys
 import matplotlib.image as image
 import json

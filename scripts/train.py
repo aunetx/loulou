@@ -1,5 +1,5 @@
 import mnist
-from rnn import *
+from ffl import *
 
 if __name__ == '__main__':
     filename = 'four layers.npy'
