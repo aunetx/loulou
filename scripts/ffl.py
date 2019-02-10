@@ -31,3 +31,9 @@ def train(weights, trX, trY, teX, teY, filename=False, epochs=30, batch=20, lear
 def save(weights, filename):
     np.save(filename,weights)
     print('Data saved successfully into ',filename)
+
+def convertJson(pred):
+    out = {}
+    out['hot_prediction'] = list(pred)
+    out['prediction'] = int(np.argmax(pred))
+    return json.dumps(out)
