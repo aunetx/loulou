@@ -1,3 +1,3 @@
-# To-do - loulou
+## To-do
 
-- [ ] Updating code to use with that implementation
+- Updating code to use with that implementation
