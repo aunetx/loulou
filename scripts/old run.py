@@ -1,10 +1,23 @@
 import numpy as np
-from rnn import *
 import sys
 import matplotlib.image as image
 import json
 
-#   Handling errors for bad arguments
+#   Prediction function (fordward propagation)
+def predire(X, weights):
+    a = [X]
+    for w in weights:
+        a.append(np.maximum(a[-1].dot(w),0))
+    return a
+
+#   Json conversion function
+def saveJson(pred):
+    out = {}
+    out['hot_prediction'] = list(pred)
+    out['prediction'] = int(np.argmax(pred))
+    return json.dumps(out)
+
+#   Handling errors for arguments
 try:
     assert len(sys.argv) == 3
 except AssertionError:
@@ -32,6 +45,6 @@ except FileNotFoundError:
 #   Shaping image onto matrix
 topred = 1 - img.reshape(784,4).mean(axis=1)
 #   Making prediction
-prediction = feed_forward(topred, weights)[-1]
+prediction = predire(topred, weights)[-1]
 #   Printing json output
-print(convertJson(prediction))
+print(saveJson(prediction))
