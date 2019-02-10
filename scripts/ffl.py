@@ -18,7 +18,7 @@ def grads(X, Y, weights):
         grads[i-1] = a[i-1].T.dot(delta) # calculating errors of weights and storing onto |grads|
     return grads / len(X)
 
-def train(weights, trX, trY, teX, teY, filename=False, epochs=30, batch=20, learning_rate=0.03):
+def train(weights, trX, trY, teX, teY, filename, epochs, batch, learning_rate):
     prediction = np.argmax(feed_forward(teX, weights)[-1], axis=1)
     print(0, np.mean(prediction == np.argmax(teY, axis=1)))
     for i in range(epochs):
