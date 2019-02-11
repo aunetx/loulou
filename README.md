@@ -20,24 +20,38 @@ git clone https://github.com/aunetx/loulou
 cd loulou/
 ```
 
-### Utilisation :
+## Utilisation :
 There are two ways to use loulou :
-1. *Training a model :*\
-  You need to define hyperparameters (number of `epochs`, `batch size` and `learning rate`)\
-  You choose a name for the saved training (will be in `./trains/`)\
-  And then you just run your training.\
-  *Simple access support added soon*
+### *Training a model :*
+To train a model, just do :
+```
+python ./scripts/train.py -e [number of epochs] -b [batch size] -l [learning rate] -a [architecture] -f [filename.npy]
+```
+Or, for windows :
+```
+py .\scripts\train.py -e [number of epochs] -b [batch size] -l [learning rate] -a [architecture] -f [filename.npy]
+```
+`architecture` is a list of digits that defines the number of neurons in each hidden layer.
 
-2. *Making a prediction :*\
-  This is as simple as :\
-        ```
-        python ./scripts/run.py [path/to/weights/file.npy] [path/to/image.png]
-        ```  
-  Or, for windows :\
-        ```
-        py .\scripts\run.py [path\to\weights\file.npy] [path\to\image.png]
-        ```
+For example : `python ./scripts/train.py -a 400 200 100` creates a network with 5 layers like :
+1. 784 neurons - *Input layer*
+2. 400 neurons - *First hidden layer*
+3. 200 neurons - *Second hidden layer*
+4. 100 neurons - *Third hidden layer*
+5. 10 neurons - *Output layer*
+
+All the arguments are optional : if you don't set a filename, the training is not saved.
+
+### *Making a prediction :*
+This is as simple as :
+```
+python ./scripts/run.py [path/to/weights/file.npy] [path/to/image.png]
+```  
+Or, for windows :
+```
+py .\scripts\run.py [path\to\weights\file.npy] [path\to\image.png]
+```
 
 ## To go further :
 ### Version :
-* Version 1.1.1 : simple training support (see *Utilisation/Making a prediction* to test it)
+* Version 1.1.1 : training support via arguments added (see *Utilisation/Making a prediction* to test it)
