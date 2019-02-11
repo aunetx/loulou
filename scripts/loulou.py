@@ -63,6 +63,8 @@ def listToArch(list):
     for hl in list:
         if id == 0:
             arch.append((784,hl))
+            if id == len(list) - 1:
+                arch.append((hl,10))
         elif id == len(list) - 1:
             arch.append((lastHl, hl))
             arch.append((hl,10))
