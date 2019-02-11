@@ -54,4 +54,4 @@ py .\scripts\run.py [path\to\weights\file.npy] [path\to\image.png]
 
 ## To go further :
 ### Version :
-* Version 1.1.1 : training support via arguments added (see *Utilisation/Making a prediction* to test it)
+* Version 1.1.2 : output improvement for training added
