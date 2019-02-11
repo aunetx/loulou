@@ -3,21 +3,6 @@ import json
 import sys
 import argparse
 
-def listToArch(list):
-    arch = []
-    id = 0
-    for hl in list:
-        if id == 0:
-            arch.append((784,hl))
-        elif id == len(list) - 1:
-            arch.append((lastHl, hl))
-            arch.append((hl,10))
-        else:
-            arch.append((lastHl, hl))
-        lastHl = hl
-        id += 1
-    return arch
-
 if __name__ == '__main__':
 
     params = {}

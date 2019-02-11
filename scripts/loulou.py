@@ -56,3 +56,18 @@ def runTrain(params, architecture, file='trained.npy'):
     trX, trY, teX, teY = mnist.load_data()
     weights = [np.random.randn(*w) * 0.1 for w in architecture]
     return train(weights, trX, trY, teX, teY, file, epochs, batch, learning_rate)
+
+def listToArch(list):
+    arch = []
+    id = 0
+    for hl in list:
+        if id == 0:
+            arch.append((784,hl))
+        elif id == len(list) - 1:
+            arch.append((lastHl, hl))
+            arch.append((hl,10))
+        else:
+            arch.append((lastHl, hl))
+        lastHl = hl
+        id += 1
+    return arch
