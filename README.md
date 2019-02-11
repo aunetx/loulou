@@ -39,7 +39,5 @@ There are two ways to use loulou :
         ```
 
 ## To go further :
-### Versions :
-* Version 1.0.0 : Initial version, works with another implementation - need some changes
-
-* Version 1.1.0 : First working version, added two main scripts
+### Version :
+* Version 1.1.1 : simple training support (see *Utilisation/Making a prediction* to test it)
