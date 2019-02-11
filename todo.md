@@ -1,4 +1,11 @@
 ## To-do
 
-- Simplify utilisation of training - `train.js`
-- Adding automatisation for running - `run.js`
+- Handling arguments for train.py :
+  `params {
+    epochs
+    batch
+    learning_rate
+    architecture
+  }`
+  OR
+  `epochs batch learning_rate architecture`
