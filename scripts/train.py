@@ -24,7 +24,7 @@ if __name__ == '__main__':
     params['epochs'] = 15
     params['batch'] = 20
     params['learning_rate'] = 0.03
-    architecture = [(784, 100), (100, 10)]
+    architecture = [(784, 200), (200, 100), (100, 10)]
 
     #   Parser
     parser = argparse.ArgumentParser(description='Train a loulou-based neural network.')
@@ -35,7 +35,7 @@ if __name__ == '__main__':
     parser.add_argument('-l', '--learning-rate', dest='learning_rate', type=float,
         help='learning rate of the network (default : 0.03)')
     parser.add_argument('-a', '--architecture', dest='architecture', nargs='+', type=int,
-        help='architecture of the hidden layers (default : 100)')
+        help='architecture of the hidden layers (default : 200 100)\nExample : "400 200 100 50"')
     args = parser.parse_args()
 
     if args.epochs is not None:
