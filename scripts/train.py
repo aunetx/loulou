@@ -25,9 +25,9 @@ if __name__ == '__main__':
     parser.add_argument('-l', '--learning-rate', dest='learning_rate', type=float,
         help='learning rate of the network (default : 0.03)')
     parser.add_argument('-s', '--save-timeout', dest='save_timeout', type=int,
-        help='number N of epochs to save automatically the file as filename_epoch_N (default : 0, disabled)') #  Need to set for 0
+        help='number N of epochs to save automatically the file as filename_epoch_N (default : 0, disabled)')
     parser.add_argument('-a', '--architecture', nargs='+', type=int,
-        help='architecture of the hidden layers (default : none)') #   Need to set option for no hidden layer
+        help='architecture of the hidden layers (default : none)')
     parser.add_argument('-r', '--reduce-output', dest='reduce_output', action="count",
         help='reduce verbosity of output (you can type several)')
     args = parser.parse_args()
