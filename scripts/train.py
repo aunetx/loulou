@@ -49,6 +49,9 @@ if __name__ == '__main__':
     if args.reduce_output is not None:
         params['reduce_output'] = args.reduce_output
 
+    print(architecture) # DEBUG
+    print(params) # DEBUG
+
     params = json.dumps(params)
     accuracy = runTrain(params, architecture, file=filename)
     if args.return_json:
