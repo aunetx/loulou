@@ -16,7 +16,7 @@ if __name__ == '__main__':
     #   Parser
     parser = argparse.ArgumentParser(description='Train a loulou-based neural network.')
     parser.add_argument('-f', '--filename', dest='filename', type=str,
-        help='name of the file to write (default : none)') #    Need to set option for other paths
+        help='name of the file to write, extension added automatically (default : none)') #    Need to set option for other paths
     parser.add_argument('-e', '--epochs', dest='epochs', type=int,
         help='number of epochs (default : 15, -1 for infinity)') #  Need to set for -1
     parser.add_argument('-b', '--batch-size', dest='batch_size', type=int,
