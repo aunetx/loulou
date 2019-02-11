@@ -47,12 +47,13 @@ def convertJson(pred):
     out['prediction'] = int(np.argmax(pred))
     return json.dumps(out)
 
-def runTrain(params, architecture, file='trained.npy'):
+def runTrain(params, architecture, file=None):
     params = json.loads(params)
     epochs = params['epochs']
     batch = params['batch']
     learning_rate = params['learning_rate']
-    file = '../trains/' + file
+    if file:
+        file = '../trains/' + file
     trX, trY, teX, teY = mnist.load_data()
     weights = [np.random.randn(*w) * 0.1 for w in architecture]
     return train(weights, trX, trY, teX, teY, file, epochs, batch, learning_rate)
