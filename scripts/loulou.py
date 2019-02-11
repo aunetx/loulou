@@ -19,7 +19,8 @@ def grads(X, Y, weights):
         grads[i-1] = a[i-1].T.dot(delta) # calculating errors of weights and storing onto |grads|
     return grads / len(X)
 
-def train(weights, trX, trY, teX, teY, filename, epochs, batch, learning_rate):
+def train(weights, trX, trY, teX, teY, filename, epochs, batch, learning_rate, save_timeout):
+    path = os.path.dirname(__file__)
     accuracy = {}
     prediction = np.argmax(feed_forward(teX, weights)[-1], axis=1)
     accuracy[0] = np.mean(prediction == np.argmax(teY, axis=1))
@@ -31,9 +32,13 @@ def train(weights, trX, trY, teX, teY, filename, epochs, batch, learning_rate):
         prediction = np.argmax(feed_forward(teX, weights)[-1], axis=1)
         accuracy[i+1] = np.mean(prediction == np.argmax(teY, axis=1))
         print(i+1, accuracy[i+1])
+        if filename:
+            if i % save_timeout == 0:
+                temp_filename = '../trains/temp/' + filename + '_epoch_' + str(i) + '.npy'
+                temp_filename = os.path.join(path, temp_filename)
+                save(weights, temp_filename)
     if filename:
-        path = os.path.dirname(__file__)
-        filename = os.path.join(path, filename)
+        filename = os.path.join(path, '../trains/' + filename + '.npy')
         save(weights, filename)
     return accuracy
 
@@ -52,11 +57,10 @@ def runTrain(params, architecture, file=None):
     epochs = params['epochs']
     batch = params['batch']
     learning_rate = params['learning_rate']
-    if file:
-        file = '../trains/' + file
+    save_timeout = params['save_timeout']
     trX, trY, teX, teY = mnist.load_data()
     weights = [np.random.randn(*w) * 0.1 for w in architecture]
-    return train(weights, trX, trY, teX, teY, file, epochs, batch, learning_rate)
+    return train(weights, trX, trY, teX, teY, file, epochs, batch, learning_rate, save_timeout)
 
 def listToArch(list):
     arch = []
