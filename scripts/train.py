@@ -15,7 +15,7 @@ if __name__ == '__main__':
     filename = None
 
     #   Parser
-    parser = argparse.ArgumentParser(description='Train a loulou-based neural network.')
+    parser = argparse.ArgumentParser(description='Utility to train a loulou-based neural network.')
     parser.add_argument('-f', '--filename', dest='filename', type=str,
         help='name of the file to write, extension added automatically (default : none)') #    Need to set option for other paths
     parser.add_argument('-e', '--epochs', dest='epochs', type=int,
@@ -30,6 +30,8 @@ if __name__ == '__main__':
         help='architecture of the hidden layers (default : none)')
     parser.add_argument('-r', '--reduce-output', dest='reduce_output', action="count",
         help='reduce verbosity of output (you can type several)')
+    parser.add_argument('-j', '--return-json', dest='return_json', action="store_true",
+        help='finally, print the progression of accuracy in a json format')
     args = parser.parse_args()
 
     if args.epochs is not None:
@@ -49,3 +51,5 @@ if __name__ == '__main__':
 
     params = json.dumps(params)
     accuracy = runTrain(params, architecture, file=filename)
+    if args.return_json:
+        print(accuracy)
