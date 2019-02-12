@@ -28,6 +28,8 @@ def train(weights, trX, trY, teX, teY, filename, epochs, batch, learning_rate, s
     accuracy[0] = np.mean(prediction == np.argmax(teY, axis=1))
     if reduce_output < 2:
         print('Accuracy of epoch',0,':', accuracy[0])
+    if reduce_output == 2:
+        print(0, accuracy[0])
     if epochs < 0:
         epochs = 99999999999
     for i in range(epochs):
@@ -45,6 +47,8 @@ def train(weights, trX, trY, teX, teY, filename, epochs, batch, learning_rate, s
         accuracy[i+1] = np.mean(prediction == np.argmax(teY, axis=1))
         if reduce_output < 2:
             print('Accuracy of epoch',i+1,':', accuracy[i+1])
+        if reduce_output == 2:
+            print(i+1, accuracy[i+1])
         if filename:
             if save_timeout > 0:
                 if i % save_timeout == 0:
