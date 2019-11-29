@@ -15,23 +15,24 @@ if __name__ == '__main__':
     filename = None
 
     #   Parser
-    parser = argparse.ArgumentParser(description='Utility to train a loulou-based neural network.')
+    parser = argparse.ArgumentParser(
+        description='Utility to train a loulou-based neural network.')
     parser.add_argument('-f', '--filename', dest='filename', type=str,
-        help='name of the file to write, extension added automatically (default : none)') #    Need to set option for other paths
+                        help='name of the file to write, extension added automatically (default : none)')  # Need to set option for other paths
     parser.add_argument('-e', '--epochs', dest='epochs', type=int,
-        help='number of epochs (default : 15, -1 for infinity)')
+                        help='number of epochs (default : 15, -1 for infinity)')
     parser.add_argument('-b', '--batch-size', dest='batch_size', type=int,
-        help='size of batch (default : 20)')
+                        help='size of batch (default : 20)')
     parser.add_argument('-l', '--learning-rate', dest='learning_rate', type=float,
-        help='learning rate of the network (default : 0.03)')
+                        help='learning rate of the network (default : 0.03)')
     parser.add_argument('-s', '--save-timeout', dest='save_timeout', type=int,
-        help='number N of epochs to save automatically the file as filename_epoch_N (default : 0, disabled)')
+                        help='number N of epochs to save automatically the file as filename_epoch_N (default : 0, disabled)')
     parser.add_argument('-a', '--architecture', nargs='+', type=int,
-        help='architecture of the hidden layers (default : none)')
+                        help='architecture of the hidden layers (default : none)')
     parser.add_argument('-r', '--reduce-output', dest='reduce_output', action="count",
-        help='reduce verbosity of output (you can type several)')
+                        help='reduce verbosity of output (you can type several)')
     parser.add_argument('-j', '--return-json', dest='return_json', action="store_true",
-        help='finally, print the progression of accuracy in a json format')
+                        help='finally, print the progression of accuracy in a json format')
     args = parser.parse_args()
 
     if args.epochs is not None:
