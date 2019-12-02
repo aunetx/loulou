@@ -1,8 +1,8 @@
 import numpy as np
-#from ffl import *
 import sys
 import matplotlib.image as image
 from loulou import feed_forward, convertJson
+from activations import relu
 
 if __name__ == '__main__':
     #   Handling errors for bad arguments
@@ -31,9 +31,12 @@ if __name__ == '__main__':
         print("Image : ", img)
         exit()
 
+    # TODO pack activations list into `.npy` file
+    activation_fn = [activation_fn.relu]
+
     #   Shaping image onto matrix
     topred = 1 - img.reshape(784, 4).mean(axis=1)
     #   Making prediction
-    prediction = feed_forward(topred, weights)[-1]
+    prediction = feed_forward(topred, weights, activation_fn)[-1]
     #   Printing json output
     print(convertJson(prediction))

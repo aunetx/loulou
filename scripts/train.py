@@ -1,6 +1,5 @@
-from loulou import *
+from loulou import runTrain, listToArch, listToActivations
 import json
-import sys
 import argparse
 
 if __name__ == '__main__':
@@ -9,7 +8,8 @@ if __name__ == '__main__':
     params['epochs'] = 15
     params['batch'] = 20
     params['learning_rate'] = 0.03
-    params['save_timeout'] = 5
+    params['activations'] = ['relu']
+    params['save_timeout'] = 0
     params['reduce_output'] = 0
     architecture = [(784, 10)]
     filename = None
@@ -26,9 +26,11 @@ if __name__ == '__main__':
     parser.add_argument('-l', '--learning-rate', dest='learning_rate', type=float,
                         help='learning rate of the network (default : 0.03)')
     parser.add_argument('-s', '--save-timeout', dest='save_timeout', type=int,
-                        help='number N of epochs to save automatically the file as filename_epoch_N (default : 0, disabled)')
+                        help='number N of epochs before saving automatically the file as filename_epoch_N (default : 0, disabled)')
     parser.add_argument('-a', '--architecture', nargs='+', type=int,
                         help='architecture of the hidden layers (default : none)')
+    parser.add_argument('-t', '--activations', '--transfert-functions', nargs='+', type=str,
+                        help='names of the activations functions for each layer (default : \'relu\' as fallback)')
     parser.add_argument('-r', '--reduce-output', dest='reduce_output', action="count",
                         help='reduce verbosity of output (you can type several)')
     parser.add_argument('-j', '--return-json', dest='return_json', action="store_true",
@@ -43,6 +45,8 @@ if __name__ == '__main__':
         params['learning_rate'] = args.learning_rate
     if args.architecture is not None:
         architecture = listToArch(args.architecture)
+    if args.activations is not None:
+        params['activations'] = args.activations
     if args.filename is not None:
         filename = args.filename
     if args.save_timeout is not None:
