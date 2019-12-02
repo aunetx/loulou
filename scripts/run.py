@@ -1,8 +1,10 @@
 import numpy as np
 import sys
 import matplotlib.image as image
-from loulou import feed_forward, convertJson
+
+from loulou import feed_forward
 from activations import relu
+from utils import convertJson
 
 if __name__ == '__main__':
     #   Handling errors for bad arguments

@@ -1,4 +1,5 @@
-from loulou import runTrain, listToArch, listToActivations
+from loulou import runTrain
+from utils import listToArch
 import json
 import argparse
 
@@ -55,6 +56,11 @@ if __name__ == '__main__':
         params['reduce_output'] = args.reduce_output
 
     params = json.dumps(params)
-    accuracy = runTrain(params, architecture, file=filename)
+    try:
+        accuracy = runTrain(params, architecture, file=filename)
+    except KeyboardInterrupt:
+        print('\nTraining stopped by user')
+        exit()
+
     if args.return_json:
         print(accuracy)
