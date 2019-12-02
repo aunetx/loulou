@@ -76,7 +76,7 @@ def train(weights, trX, trY, teX, teY, filename, epochs, batch, learning_rate, s
         teX, weights, activations_fn)[-1], axis=1)
     accuracy[0] = np.mean(prediction == np.argmax(teY, axis=1))
     if reduce_output < 2:
-        print('Accuracy of epoch', 0, ':', accuracy[0])
+        print('Accuracy of epoch 0 :', accuracy[0])
     if reduce_output == 2:
         print(0, accuracy[0])
     if epochs < 0:
@@ -123,6 +123,27 @@ def runTrain(params, architecture, file=None):
     activations_arch, primes_arch = activations.listToActivations(
         params['activations'], architecture)
 
+    if reduce_output < 1:
+        print_network_visualization(
+            architecture, activations_arch, epochs, batch, learning_rate)
+
     trX, trY, teX, teY = mnist.load_data()
     weights = [np.random.randn(*w) * 0.1 for w in architecture]
     return train(weights, trX, trY, teX, teY, file, epochs, batch, learning_rate, save_timeout, reduce_output, activations_arch, primes_arch)
+
+
+def print_network_visualization(architecture, activations_arch, epochs, batch, learning_rate):
+    print('Network has', len(architecture) - 1, 'hidden layers :')
+
+    print('     layer [0]  -->  784   neurons, inputs')
+
+    for id, layer in enumerate(architecture):
+        if id != 0:
+            print('     layer ['+str(id)+']  -->  ' +
+                  str(layer[0]) + (' '*(6-len(str(layer[0])))) + 'neurons,', activations_arch[id-1].__name__)
+
+    print('     layer ['+str(id+1)+']  -->  10    neurons,',
+          activations_arch[id].__name__, '')
+
+    print('Hyperparameters : epochs = ', epochs, ', batches = ',
+          batch, ', learning rate = ', learning_rate, '\n', sep='')

@@ -71,44 +71,30 @@ def listToActivations(activations_list, architecture):
         if id < len(activations_list):
 
             if activations_list[id] == 'relu':
-                print(
-                    'Activation `relu` successfully used for layer', id)
                 activations_fn.append(relu)
                 activations_prime.append(relu_prime)
 
             elif activations_list[id] == 'leaky_relu':
-                print(
-                    'Activation `leaky_relu` successfully used for layer', id)
                 activations_fn.append(leaky_relu)
                 activations_prime.append(leaky_relu_prime)
 
             elif activations_list[id] == 'linear':
-                print(
-                    'Activation `linear` successfully used for layer', id)
                 activations_fn.append(linear)
                 activations_prime.append(linear_prime)
 
             elif activations_list[id] == 'heaviside':
-                print(
-                    'Activation `heaviside` successfully used for layer', id)
                 activations_fn.append(heaviside)
                 activations_prime.append(heaviside_prime)
 
             elif activations_list[id] == 'sigmoid':
-                print(
-                    'Activation `sigmoid` successfully used for layer', id)
                 activations_fn.append(sigmoid)
                 activations_prime.append(sigmoid_prime)
 
             elif activations_list[id] == 'tanh':
-                print(
-                    'Activation `tanh` successfully used for layer', id)
                 activations_fn.append(tanh)
                 activations_prime.append(tanh_prime)
 
             elif activations_list[id] == 'arctan':
-                print(
-                    'Activation `arctan` successfully used for layer', id)
                 activations_fn.append(arctan)
                 activations_prime.append(arctan_prime)
 
@@ -119,8 +105,6 @@ def listToActivations(activations_list, architecture):
 
         # If not defined, fallback function is relu
         else:
-            print(
-                'Activation not defined, `relu` used for layer', id)
             activations_fn.append(relu)
             activations_prime.append(relu_prime)
 
