@@ -31,3 +31,20 @@ def listToArch(list):
         lastHl = hl
         id += 1
     return arch
+
+
+def print_network_visualization(architecture, activations_arch, epochs, batch, learning_rate):
+    print('Network has', len(architecture) - 1, 'hidden layers :')
+
+    print('     layer [0]  -->  784   neurons, inputs')
+
+    for id, layer in enumerate(architecture):
+        if id != 0:
+            print('     layer ['+str(id)+']  -->  ' +
+                  str(layer[0]) + (' '*(6-len(str(layer[0])))) + 'neurons,', activations_arch[id-1].__name__)
+
+    print('     layer ['+str(id+1)+']  -->  10    neurons,',
+          activations_arch[id].__name__, '')
+
+    print('Hyperparameters : epochs = ', epochs, ', batches = ',
+          batch, ', learning rate = ', learning_rate, '\n', sep='')
