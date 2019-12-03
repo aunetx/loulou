@@ -2,9 +2,13 @@ import numpy as np
 import json
 
 
-def save(weights: list, activations_list: list, filename: str, reduce_output: int) -> None:
-    np.save(filename, {'weights': weights,
-                       'activations': activations_list})
+def save(weights: list, activations_fn_list: list, filename: str, reduce_output: int) -> None:
+    activations_names_list = []
+    for act in activations_fn_list:
+        activations_names_list.append(act.__name__)
+
+    np.savez_compressed(filename, weights=weights,
+                        activations=activations_names_list)
     if reduce_output < 2:
         print('Data saved successfully into ', filename)
 
@@ -12,7 +16,7 @@ def save(weights: list, activations_list: list, filename: str, reduce_output: in
 def convertJson(pred: np.ndarray) -> str:
     out = {}
     out['hot_prediction'] = list(pred)
-    out['prediction'] = int(np.argmax(pred))
+    out['prediction'] = int(pred.argmax())
     return json.dumps(out)
 
 

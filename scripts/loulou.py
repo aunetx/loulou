@@ -121,14 +121,14 @@ def train(weights: list, trX: np.ndarray, trY: np.ndarray, teX: np.ndarray, teY:
             if save_timeout > 0:
                 if i % save_timeout == 0:
                     temp_filename = '../trains/temp/' + \
-                        filename + '_epoch_' + str(i) + '.npy'
+                        filename + '_epoch_' + str(i) + '.npz'
                     temp_filename = os.path.join(path, temp_filename)
                     utils.save(weights, activations_fn,
                                temp_filename, reduce_output)
 
     # Save final file
     if filename:
-        filename = os.path.join(path, '../trains/' + filename + '.npy')
+        filename = os.path.join(path, '../trains/' + filename + '.npz')
         utils.save(weights, activations_fn, filename, reduce_output)
 
     return accuracy

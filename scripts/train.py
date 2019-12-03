@@ -21,8 +21,9 @@ if __name__ == '__main__':
     #   Parser
     parser = argparse.ArgumentParser(
         description='Utility to train a loulou-based neural network.')
+    # TODO set option to choose path
     parser.add_argument('-f', '--filename', dest='filename', type=str,
-                        help='name of the file to write, extension added automatically (default : none)')  # Need to set option for other paths
+                        help='name of the file to write, extension added automatically (default : none)')
     parser.add_argument('-e', '--epochs', dest='epochs', type=int,
                         help='number of epochs (default : 15, -1 for infinity)')
     parser.add_argument('-b', '--batch-size', dest='batch_size', type=int,
@@ -38,7 +39,7 @@ if __name__ == '__main__':
     parser.add_argument('-r', '--reduce-output', dest='reduce_output', action="count",
                         help='reduce verbosity of output (you can type several)')
     parser.add_argument('-j', '--return-json', dest='return_json', action="store_true",
-                        help='finally, print the progression of accuracy in a json format')
+                        help='print the progression of accuracy in a json format')
     args = parser.parse_args()
 
     if args.epochs is not None:
