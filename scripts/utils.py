@@ -2,8 +2,9 @@ import numpy as np
 import json
 
 
-def save(weights: list, filename: str, reduce_output: int) -> None:
-    np.save(filename, weights)
+def save(weights: list, activations_list: list, filename: str, reduce_output: int) -> None:
+    np.save(filename, {'weights': weights,
+                       'activations': activations_list})
     if reduce_output < 2:
         print('Data saved successfully into ', filename)
 

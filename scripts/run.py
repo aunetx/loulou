@@ -5,7 +5,6 @@ import sys
 import matplotlib.image as image
 
 from loulou import feed_forward
-from activations import relu
 from utils import convertJson
 
 if __name__ == '__main__':
@@ -19,7 +18,9 @@ if __name__ == '__main__':
     #   Loading weights matrix
     filename = sys.argv[1]
     try:
-        weights = np.load(filename)
+        file = np.load(filename)
+        weights = file['weights']
+        activations = file['activations']
     except FileNotFoundError:
         print(
             "Error ! Weights matrix file could not be opened, please check that it exists.")
@@ -35,12 +36,9 @@ if __name__ == '__main__':
         print("Image : ", img)
         exit()
 
-    # TODO pack activations list into `.npy` file
-    activation_fn = [activation_fn.relu]
-
     #   Shaping image onto matrix
     topred = 1 - img.reshape(784, 4).mean(axis=1)
     #   Making prediction
-    prediction = feed_forward(topred, weights, activation_fn)[-1]
+    prediction = feed_forward(topred, weights, activations)[-1]
     #   Printing json output
     print(convertJson(prediction))
