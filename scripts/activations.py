@@ -2,65 +2,65 @@ import numpy as np
 
 
 # Relu
-def relu(y):
+def relu(y) -> np.ndarray:
     return np.maximum(y, 0)
 
 
-def relu_prime(y):
+def relu_prime(y) -> np.ndarray:
     return y > 0
 
 
 # Leaky relu
-def leaky_relu(y):
+def leaky_relu(y) -> np.ndarray:
     return np.where(y > 0, y, y * 0.01)
 
 
-def leaky_relu_prime(y):
+def leaky_relu_prime(y) -> np.ndarray:
     return (y >= 0) + (y < 0)*0.01
 
 
 # Linear
-def linear(y):
+def linear(y) -> np.ndarray:
     return y
 
 
-def linear_prime(y):
+def linear_prime(y) -> np.ndarray:
     return 1
 
 
 # Heavyside
-def heaviside(y):
+def heaviside(y) -> np.ndarray:
     return 1 * (y > 0)
 
 
-def heaviside_prime(y):
+def heaviside_prime(y) -> np.ndarray:
     return 0
 
 
 # Sigmoid
-def sigmoid(y):
+def sigmoid(y) -> np.ndarray:
     return 1 / (1 + np.exp(-y))
 
 
-def sigmoid_prime(y):
+def sigmoid_prime(y) -> np.ndarray:
     return y * (1 - y)
 
 
 # Tanh
-def tanh(y):
+def tanh(y) -> np.ndarray:
     return np.tanh(y)
 
 
-def tanh_prime(y):
+def tanh_prime(y) -> np.ndarray:
     return 1 - y**2
 
 
 # Arctan
-def arctan(y):
+def arctan(y) -> np.ndarray:
     return np.arctan(y)
 
 
-def arctan_prime(y):
+def arctan_prime(y) -> np.ndarray:
     return 1 / y**2 + 1
 
 

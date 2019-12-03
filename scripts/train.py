@@ -1,7 +1,10 @@
-from loulou import runTrain
-from utils import listToArch
+#!/usr/bin/env python3
+
 import json
 import argparse
+
+from loulou import runTrain
+from utils import listToArch
 
 if __name__ == '__main__':
 

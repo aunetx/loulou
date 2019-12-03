@@ -2,20 +2,20 @@ import numpy as np
 import json
 
 
-def save(weights, filename, reduce_output):
+def save(weights: list, filename: str, reduce_output: int) -> None:
     np.save(filename, weights)
     if reduce_output < 2:
         print('Data saved successfully into ', filename)
 
 
-def convertJson(pred):
+def convertJson(pred: np.ndarray) -> str:
     out = {}
     out['hot_prediction'] = list(pred)
     out['prediction'] = int(np.argmax(pred))
     return json.dumps(out)
 
 
-def listToArch(list):
+def listToArch(list: list) -> list:
     arch = []
     id = 0
     for hl in list:
@@ -33,7 +33,7 @@ def listToArch(list):
     return arch
 
 
-def print_network_visualization(architecture, activations_arch, epochs, batch, learning_rate):
+def print_network_visualization(architecture: list, activations_arch: list, epochs: int, batch: int, learning_rate: float) -> None:
     print('Network has', len(architecture) - 1, 'hidden layers :')
 
     print('     layer [0]  -->  784   neurons, inputs')
