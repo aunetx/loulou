@@ -1,4 +1,3 @@
-from tqdm import tqdm
 import numpy as np
 import json
 import sys
@@ -92,7 +91,11 @@ def train(weights: list, trX: np.ndarray, trY: np.ndarray, teX: np.ndarray, teY:
     # Epochs loop
     for i in range(epochs):
         if reduce_output < 1:
-
+            try:
+                from tqdm import tqdm
+            except ImportError:
+                print('Cannot find module `tqdm`!\nInstall it with `pip3 install tqdm` (or equivalent), or run the program with the argument `-r`.')
+                exit(1)
             pbar = tqdm(range(0, len(trX), batch))
         else:
             pbar = range(0, len(trX), batch)
