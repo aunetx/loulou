@@ -64,6 +64,18 @@ def arctan_prime(y) -> np.ndarray:
     return 1 / (y**2 + 1)
 
 
+# Softmax
+def softmax(y) -> np.ndarray:
+    e = np.exp(y - np.max(y))
+    return e / e.sum(axis=0)
+
+
+# TODO implement a solution to derive softmax : the result has not the same shape as the input
+def softmax_prime(y) -> np.ndarray:
+    s = y.reshape(-1, 1)
+    return np.mean(np.diagflat(s) - np.dot(s, s.T))
+
+
 def listToActivations(activations_list, architecture) -> list:
     activations_fn = []
     activations_prime = []
@@ -98,9 +110,16 @@ def listToActivations(activations_list, architecture) -> list:
                 activations_fn.append(arctan)
                 activations_prime.append(arctan_prime)
 
+            elif activations_list[id] == 'softmax':
+                print(
+                    'Error : transfert function `', activations_list[id], '` is not fully implemented.', sep='')
+
+                activations_fn.append(softmax)
+                activations_prime.append(softmax_prime)
+
             else:
                 print(
-                    'Error :', activations_list[id], 'not defined as activation function yet.')
+                    'Error : transfert function `', activations_list[id], '` does not exist.', sep='')
                 exit(1)
 
         # If not defined, fallback function is relu
