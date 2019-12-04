@@ -52,7 +52,7 @@ def tanh(y) -> np.ndarray:
 
 
 def tanh_prime(y) -> np.ndarray:
-    return 1 - y**2
+    return 1 - tanh(y)**2
 
 
 # Arctan
@@ -61,7 +61,7 @@ def arctan(y) -> np.ndarray:
 
 
 def arctan_prime(y) -> np.ndarray:
-    return 1 / y**2 + 1
+    return 1 / (y**2 + 1)
 
 
 def listToActivations(activations_list, architecture) -> list:
