@@ -8,6 +8,9 @@ import activations
 import mnist
 import utils
 
+# Stop on RuntimeWarning during matrix processing : prevent silent overflows
+np.seterr(all='raise')
+
 
 def feed_forward(X_input: np.ndarray, weights: list, activation_fn: list) -> np.ndarray:
     """Feed fordward the network

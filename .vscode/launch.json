@@ -5,10 +5,23 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python : Fichier actuel",
+            "name": "Python : train",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "/home/aunetx/Documents/github/loulou/scripts/train.py",
+            "args": [
+                "-a",
+                "400",
+                "200",
+                "-l",
+                "0.01",
+                "-t",
+                "relu",
+                "sigmoid",
+                "-r",
+                "-b",
+                "1"
+            ],
             "console": "integratedTerminal"
         }
     ]

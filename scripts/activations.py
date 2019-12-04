@@ -43,7 +43,7 @@ def sigmoid(y) -> np.ndarray:
 
 
 def sigmoid_prime(y) -> np.ndarray:
-    return y * (1 - y)
+    return sigmoid(y) * (1 - sigmoid(y))
 
 
 # Tanh
