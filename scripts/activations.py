@@ -113,7 +113,7 @@ def listToActivations(activations_list, architecture) -> list:
             elif activations_list[id] == 'softmax':
                 print(
                     'Error : transfert function `', activations_list[id], '` is not fully implemented.', sep='')
-
+                exit(1)
                 activations_fn.append(softmax)
                 activations_prime.append(softmax_prime)
 
