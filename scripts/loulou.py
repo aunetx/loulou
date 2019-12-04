@@ -71,7 +71,7 @@ def grads(x: np.ndarray, y_expected: np.ndarray, weights: list, activations_fn: 
     return grads / len(x)
 
 
-def train(weights: list, trX: np.ndarray, trY: np.ndarray, teX: np.ndarray, teY: np.ndarray, activations_fn: list, activations_prime: list, filename: np.ndarray, epochs: int, batch: int, learning_rate: float, save_timeout: int, reduce_output: int) -> dict:
+def train(weights: list, trX: np.ndarray, trY: np.ndarray, teX: np.ndarray, teY: np.ndarray, activations_fn: list, activations_prime: list, filename: np.ndarray, epochs: int, batch: int, learning_rate: float, save_timeout: int, no_infos: bool, reduce_output: int) -> dict:
     path = os.path.dirname(__file__)
     accuracy = []
 
@@ -129,13 +129,20 @@ def train(weights: list, trX: np.ndarray, trY: np.ndarray, teX: np.ndarray, teY:
                     temp_filename = '../trains/temp/' + \
                         filename + '_epoch_' + str(i) + '.npz'
                     temp_filename = os.path.join(path, temp_filename)
+
+                    infos = [accuracy[i+1], learning_rate, i, batch]
+
                     utils.save(weights, activations_fn,
-                               temp_filename, reduce_output)
+                               temp_filename, no_infos, infos, reduce_output)
 
     # Save final file
     if filename:
         filename = os.path.join(path, '../trains/' + filename + '.npz')
-        utils.save(weights, activations_fn, filename, reduce_output)
+
+        infos = [accuracy[i+1], learning_rate, epochs, batch]
+
+        utils.save(weights, activations_fn, filename,
+                   no_infos, infos, reduce_output)
 
     return accuracy
 
@@ -146,6 +153,7 @@ def runTrain(params: dict, architecture: list, file=None) -> dict:
     batch: int = params['batch']
     learning_rate: float = params['learning_rate']
     save_timeout: int = params['save_timeout']
+    no_infos: bool = params['no_infos']
     reduce_output: int = params['reduce_output']
     activations_arch, primes_arch = activations.listToActivations(
         params['activations'], architecture)
@@ -163,4 +171,4 @@ def runTrain(params: dict, architecture: list, file=None) -> dict:
     weights = [np.random.randn(*w) * 0.1 for w in architecture]
 
     # Train network
-    return train(weights, trX, trY, teX, teY, activations_arch, primes_arch, file, epochs, batch, learning_rate, save_timeout, reduce_output)
+    return train(weights, trX, trY, teX, teY, activations_arch, primes_arch, file, epochs, batch, learning_rate, save_timeout, no_infos, reduce_output)

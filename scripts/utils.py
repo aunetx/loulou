@@ -2,13 +2,16 @@ import numpy as np
 import json
 
 
-def save(weights: list, activations_fn_list: list, filename: str, reduce_output: int) -> None:
+def save(weights: list, activations_fn_list: list, filename: str, no_infos: bool, infos: list, reduce_output: int) -> None:
     activations_names_list = []
     for act in activations_fn_list:
         activations_names_list.append(act.__name__)
-
-    np.savez_compressed(filename, weights=weights,
-                        activations=activations_names_list)
+    if not no_infos:
+        np.savez_compressed(filename, weights=weights,
+                            activations=activations_names_list, optionnal_infos=infos)
+    else:
+        np.savez_compressed(filename, weights=weights,
+                            activations=activations_names_list)
     if reduce_output < 2:
         print('Data saved successfully into ', filename)
 
