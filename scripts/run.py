@@ -41,8 +41,8 @@ if __name__ == '__main__':
             try:
                 infos = list(file['optionnal_infos'])
                 try:
-                    print('Informations of training : accuracy =', infos[0], ' learning rate =', infos[1],
-                          ' epochs =', infos[2], ' batches=', infos[3])
+                    print('Informations about training : accuracy =', infos[0], ' learning rate =', infos[1],
+                          ' epochs =', int(infos[2]), ' batches =', int(infos[3]))
                 except IndexError:
                     print('Error loading optionnal datas.')
             except KeyError:
