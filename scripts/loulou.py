@@ -55,6 +55,9 @@ def grads(x: np.ndarray, y_expected: np.ndarray, weights: list, activations_fn: 
     # Calculate global error
     delta = y[-1] - y_expected
 
+    # Calculate the cost (average error)
+    cost = 1/len(y) * np.sum((y[-1] - y_expected) ** 2)
+
     # Calculate error of output weights layer
     grads: np.ndarray = np.empty_like(weights)
     grads[-1] = y[-2].T.dot(delta)
@@ -68,37 +71,41 @@ def grads(x: np.ndarray, y_expected: np.ndarray, weights: list, activations_fn: 
         # Calculate errors of weights
         grads[i-1] = y[i-1].T.dot(delta)
 
-    return grads / len(x)
+    return grads / len(x), cost
 
 
-def train(weights: list, trX: np.ndarray, trY: np.ndarray, teX: np.ndarray, teY: np.ndarray, activations_fn: list, activations_prime: list, filename: np.ndarray, epochs: int, batch: int, learning_rate: float, save_timeout: int, no_infos: bool, reduce_output: int) -> dict:
+def train(weights: list, trainX: np.ndarray, trainY: np.ndarray, testX: np.ndarray, testY: np.ndarray, activations_fn: list, activations_prime: list, filename: np.ndarray, epochs: int, batch: int, learning_rate: float, save_timeout: int, graph: bool, no_infos: bool, reduce_output: int) -> dict:
     path = os.path.dirname(__file__)
-    accuracy = []
+    accuracy_table = []
+    average_cost_table = []
 
     # Make prediction with the untrained network
-    prediction: np.ndarray = np.argmax(feed_forward(
-        teX, weights, activations_fn)[-1], axis=1)
-    accuracy.append(np.mean(prediction == np.argmax(teY, axis=1)))
+    prediction = np.argmax(feed_forward(
+        testX, weights, activations_fn)[-1], axis=1)
+    accuracy = np.mean(prediction == np.argmax(testY, axis=1))
+    accuracy_table.append(accuracy)
 
     if reduce_output <= 1:
-        print('Accuracy of epoch 0 :', accuracy[0])
+        print('Accuracy at epoch 0 :', accuracy)
     elif reduce_output == 2:
-        print(0, accuracy[0])
+        print(0, accuracy)
 
     if epochs < 0:
         epochs = 99999999999
 
     # Epochs loop
     for i in range(epochs):
+        cost_table = []
+
         if reduce_output < 1:
             try:
                 from tqdm import tqdm
             except ImportError:
                 print('Cannot find module `tqdm`!\nInstall it with `pip3 install tqdm` (or equivalent), or run the program with the argument `-r`.')
                 exit(1)
-            pbar = tqdm(range(0, len(trX), batch))
+            pbar = tqdm(range(0, len(trainX), batch))
         else:
-            pbar = range(0, len(trX), batch)
+            pbar = range(0, len(trainX), batch)
 
         # Batches loop
         for j in pbar:
@@ -106,21 +113,29 @@ def train(weights: list, trX: np.ndarray, trY: np.ndarray, teX: np.ndarray, teY:
                 pbar.set_description("Processing epoch %s" % (i+1))
 
             # Select training data
-            X, Y = trX[j:j+batch], trY[j:j+batch]
+            X, Y = trainX[j:j+batch], trainY[j:j+batch]
 
             # Correct the network
-            weights -= learning_rate * \
-                grads(X, Y, weights, activations_fn, activations_prime)
+            grad, cost = grads(
+                X, Y, weights, activations_fn, activations_prime)
+            weights -= learning_rate * grad
+
+            cost_table.append(cost)
+
+        average_cost = np.mean(cost_table)
+        average_cost_table.append(average_cost)
 
         # Make prediction for epoch
         prediction = np.argmax(feed_forward(
-            teX, weights, activations_fn)[-1], axis=1)
-        accuracy.append(np.mean(prediction == np.argmax(teY, axis=1)))
+            testX, weights, activations_fn)[-1], axis=1)
+        accuracy = np.mean(prediction == np.argmax(testY, axis=1))
+        accuracy_table.append(accuracy)
 
         if reduce_output < 2:
-            print('Accuracy of epoch', i+1, ':', accuracy[i+1])
+            print('Accuracy at epoch', i+1, ':',
+                  accuracy, ' cost =', average_cost)
         if reduce_output == 2:
-            print(i+1, accuracy[i+1])
+            print(i+1, accuracy)
 
         # Save temp file if set so
         if filename:
@@ -130,21 +145,36 @@ def train(weights: list, trX: np.ndarray, trY: np.ndarray, teX: np.ndarray, teY:
                         filename + '_epoch_' + str(i) + '.npz'
                     temp_filename = os.path.join(path, temp_filename)
 
-                    infos = [accuracy[i+1], learning_rate, i, batch]
+                    infos = [accuracy, learning_rate, i, batch]
 
                     utils.save(weights, activations_fn,
                                temp_filename, no_infos, infos, reduce_output)
+
+    # Show plot of accuracy and cost
+    if graph:
+        print('Plotting training evolution...', end=' ', flush=True)
+        import matplotlib.pyplot as plt
+        plt.plot(range(1, epochs+1), average_cost_table, label='cost', lw=0.7)
+        plt.plot(range(0, epochs+1), accuracy_table, label='accuracy', lw=0.7)
+        plt.xlim(0, epochs)
+        plt.ylim(0)
+        plt.grid(axis='both', linestyle='--')
+        plt.xlabel('Epoch number', fontsize=11)
+        plt.legend()
+        plt.show()
+        plt.close()
+        print('done !')
 
     # Save final file
     if filename:
         filename = os.path.join(path, '../trains/' + filename + '.npz')
 
-        infos = [accuracy[i+1], learning_rate, epochs, batch]
+        infos = [accuracy, learning_rate, epochs, batch]
 
         utils.save(weights, activations_fn, filename,
                    no_infos, infos, reduce_output)
 
-    return accuracy
+    return accuracy_table
 
 
 def runTrain(params: dict, architecture: list, file=None) -> dict:
@@ -153,6 +183,7 @@ def runTrain(params: dict, architecture: list, file=None) -> dict:
     batch: int = params['batch']
     learning_rate: float = params['learning_rate']
     save_timeout: int = params['save_timeout']
+    graph: bool = params['graph']
     no_infos: bool = params['no_infos']
     reduce_output: int = params['reduce_output']
     activations_arch, primes_arch = activations.listToActivations(
@@ -171,4 +202,4 @@ def runTrain(params: dict, architecture: list, file=None) -> dict:
     weights = [np.random.randn(*w) * 0.1 for w in architecture]
 
     # Train network
-    return train(weights, trX, trY, teX, teY, activations_arch, primes_arch, file, epochs, batch, learning_rate, save_timeout, no_infos, reduce_output)
+    return train(weights, trX, trY, teX, teY, activations_arch, primes_arch, file, epochs, batch, learning_rate, save_timeout, graph, no_infos, reduce_output)
