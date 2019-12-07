@@ -54,5 +54,7 @@ def print_network_visualization(architecture: list, activations_arch: list, epoc
     print('     layer ['+str(id+1)+']  -->  10    neurons,',
           activations_arch[id].__name__, '')
 
+    if epochs < 0:
+        epochs = 'no limit'
     print('Hyperparameters : epochs = ', epochs, ', batches = ',
           batch, ', learning rate = ', learning_rate, '\n', sep='')

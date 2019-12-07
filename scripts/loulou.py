@@ -153,12 +153,16 @@ def train(weights: list, trainX: np.ndarray, trainY: np.ndarray, testX: np.ndarr
     # Show plot of accuracy and cost
     if graph:
         print('Plotting training evolution...', end=' ', flush=True)
-        import matplotlib.pyplot as plt
-        plt.plot(range(1, epochs+1), average_cost_table, label='cost', lw=0.7)
-        plt.plot(range(0, epochs+1), accuracy_table, label='accuracy', lw=0.7)
+        try:
+            import matplotlib.pyplot as plt
+        except ImportError:
+            print('Cannot find module `matplotlib`!\nInstall it with `pip3 install matplotlib` (or equivalent), or run the program with the argument `-g`.')
+            exit(1)
+        plt.plot(range(1, epochs+1), average_cost_table, label='cost')
+        plt.plot(range(0, epochs+1), accuracy_table, label='accuracy')
         plt.xlim(0, epochs)
         plt.ylim(0)
-        plt.grid(axis='both', linestyle='--')
+        plt.grid(axis='both', linestyle=':')
         plt.xlabel('Epoch number', fontsize=11)
         plt.legend()
         plt.show()
