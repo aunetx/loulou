@@ -78,10 +78,11 @@ if __name__ == '__main__':
 
     params = json.dumps(params)
     try:
-        accuracy = runTrain(params, architecture, file=filename)
+        accuracy, cost = runTrain(params, architecture, file=filename)
     except KeyboardInterrupt:
         print('\nTraining stopped by user')
         exit()
 
     if args.return_json:
         print(accuracy)
+        print(cost)
